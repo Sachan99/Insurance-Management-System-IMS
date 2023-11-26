@@ -1,0 +1,215 @@
+<div class="container">
+
+  <div class="card">
+      <div class="card-header">
+          <h2>Search Queries</h2>
+      </div>
+      <div class="tabs">
+    <!--<input class="input" name="tabs" type="radio" id="tab-1" checked="checked"/>
+    <label class="label" for="tab-1">Query1: </label>
+    <div class="panel">
+      <h1>Simple Search</h1>
+        <p>find customer records by first name, last name, or email, and also retrieve all customer records if no specific criteria are provided</p>
+        <form (ngSubmit)="onSearch()">
+          <input type="text" [(ngModel)]="searchParams.firstName" name="firstName" placeholder="First Name">
+          <input type="text" [(ngModel)]="searchParams.lastName" name="lastName" placeholder="Last Name">
+          <input type="email" [(ngModel)]="searchParams.email" name="email" placeholder="Email">
+          <button type="submit" class="btn btn-primary">Search Simple</button> 
+        </form>
+        <div class="card">
+        <div *ngIf="searchResults && searchResults.length > 0">
+          <h2>Search Results</h2>
+          <ul>
+            <li *ngFor="let customer of searchResults">
+              {{ customer.firstName }} {{ customer.lastName }} - {{ customer.email }}
+            </li>
+          </ul>
+        </div>
+      </div>-->
+   </div>
+
+
+    <input class="input" name="tabs" type="radio" id="tab-1"checked="checked"/>
+    <label class="label" for="tab-1">Query1: </label>
+    <div class="panel">
+    
+      
+      <h4>Retrieve customer and policy details for claims exceeding a specified limit.</h4>
+      <br>
+      
+        <form (submit)="oNSearch()" class="formm">
+          <label for="threshold">Choose Claim Amount:</label>
+          <input type="number" id="threshold" [(ngModel)]="claimAmountThreshold" name="threshold">&nbsp;
+          <button type="submit" class="btn btn-custom-blue">Search</button> <!-- Add Bootstrap class -->
+        </form>
+        <div class="card">
+          <div *ngIf="highValueClaims.length > 0">
+            <table class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Sno</th>
+                  <th scope="col">CustomerFullName</th>
+                  
+                  <th scope="col">Policy Number</th>
+                  <th scope="col">Policy Amount</th>
+                  <th scope="col">Policy Type</th>
+                  <th scope="col">Claim Status</th>
+                  <th scope="col">Claim Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let claim of highValueClaims; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ claim.customerFirstName }} {{ claim.customerLastName }}</td>
+                  <td>{{ claim.policyNumber }}</td>
+                  <td>{{ claim.policyAmount }}</td>
+                  <td>{{ claim.policyType }}</td>
+                  <td>{{ claim.claimStatus }}</td>
+                  <td>{{ claim.claimAmount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      
+    </div>
+
+
+    <input class="input" name="tabs" type="radio" id="tab-2"/>
+    <label class="label" for="tab-2">Query2: </label>
+    <div class="panel">
+      <h4>Retrieve customer and policy data based on a specific insurance policy type, considering whether late payments are present or not.</h4>
+        <form (submit)="onSearchLatePayments()" class="formm">
+          <label for="policyType">Policy Type:</label>
+          <select id="policyType" [(ngModel)]="lateSearchParams.policyType" name="policyType" class="form-control" >
+            <option value="auto">auto</option>
+            <option value="life">life</option>
+            <option value="health">health</option>
+            <option value="home">home</option>
+            <option value="travel">travel</option>
+            <option value="property">property</option>
+          </select>
+          <!-- <input type="text" id="policyType" [(ngModel)]="lateSearchParams.policyType" name="policyType" class="form-control" placeholder="Policy Type"> -->
+          <label for="latePayment">Late Payment:</label>
+                <select id="latePayment" [(ngModel)]="lateSearchParams.latePayment" name="latePayment" class="form-control">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select><br>
+          <button type="submit" class="btn btn-custom-blue">Search</button> <!-- Add Bootstrap class -->
+        </form>
+        <br>
+        <div class="card">
+        <div *ngIf="latePaymentResults.length > 0">
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Sno</th>
+              <th scope="col">customerID</th>
+              <th scope="col">CustomerFullName</th>
+              <th scope="col">policyId</th>
+              <th scope="col">policyStartDate</th>
+              <th scope="col">policyEndDate</th>
+              <th scope="col">Latepayement</th>
+              <th scope="col">amountPaid</th>
+              
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let latePayment of latePaymentResults;let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ latePayment.customerId }}</td>
+              <td>{{ latePayment.customerFirstName }} {{ latePayment.customerLastName }}</td>
+              <td>{{ latePayment.policyId }}</td>
+              <td>{{ latePayment.policyStartDate}}</td>
+              <td>{{ latePayment.policyEndDate}}</td>
+              <td>{{ latePayment.latePayment }}</td>
+              <td>{{ latePayment.amountPaid }}</td>
+             
+              
+            </tr>
+          </tbody>
+        </table>
+        
+        </div>
+    </div>
+    </div>
+
+
+    <input class="input" name="tabs" type="radio" id="tab-3"/>
+    <label class="label" for="tab-3">Query3: </label>
+    <div class="panel">
+      
+      <h4>Retrieve Agent details based on customer gender and policy status.</h4>     
+      <br> <div class="card-bx2">
+        
+        <label for="gender">Gender:</label>
+        <select id="gender" [(ngModel)]="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <label for="isActive">Active:</label>
+        <input type="checkbox" id="isActive" [(ngModel)]="isActive">&nbsp;
+        <button class="btn btn-custom-blue" (click)="getAgentsByGenderAndActiveStatus()">search </button>
+        
+        <br>
+        <br>
+        
+        <div class="card">
+          <div *ngIf="agents.length > 0">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Sno</th>
+                <th scope="col">AgentFullName</th>
+                <th scope="col">AgentID</th>
+                <th scope="col">agentEmail</th>
+                <th scope="col">CustomerFullName</th>
+               
+                <th scope="col">customerGender</th>
+                <th scope="col">policyNumber</th>
+                <th scope="col">policyactive</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let agent of agents;let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ agent.agentFirstName }} {{ agent.agentLastName }}</td>
+                <td>{{ agent.agentId }}</td>
+                <td>{{ agent.agentEmail }}</td>
+                <td>{{ agent.customerFirstName }} {{ agent.customerLastName }}</td>
+                
+                <td>{{ agent.customerGender }}</td>
+                <td>{{ agent.policyNumber }}</td>
+                <td>{{ agent.policyActive }}</td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+    </div>
+    </div>
+
+    <!-- 5th query -->
+    <!-- <input class="input" name="tabs" type="radio" id="tab-5"/>
+    <label class="label" for="tab-5">Query5: </label>
+    <div class="panel">
+      <h1>News Payment</h1>
+      <p>Retrieve a list of late payments for a specific type of insurance policy, including comprehensive details about the associated customers and policies, based on whether the latepayments are marked as true or faalse.'"</p>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam eum possimus, non porro quidem soluta reprehenderit ut modi perferendis ad reiciendis error, inventore numquam, omnis neque atque accusantium dolor quae?</p>
+        
+    </div>
+
+     
+    <input class="input" name="tabs" type="radio" id="tab-6"/>
+    <label class="label" for="tab-6">Query6: </label>
+    <div class="panel">
+      <h1>News Payment</h1>
+      <p>Retrieve a list of late payments for a specific type of insurance policy, including comprehensive details about the associated customers and policies, based on whether the latepayments are marked as true or faalse.'"</p>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam eum possimus, non porro quidem soluta reprehenderit ut modi perferendis ad reiciendis error, inventore numquam, omnis neque atque accusantium dolor quae?</p>
+        
+    </div>  -->
+</div>

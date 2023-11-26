@@ -1,0 +1,123 @@
+
+
+<!-- customer.component.html -->
+
+<div class="container">
+
+  <div class="card">
+      <div class="card-header">
+          <h2>Customers</h2>
+      </div>
+
+      
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Customer ID</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Email</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let customer of customers" (click)="selectCustomer(customer)">
+        <th >{{ customer.id }}</th>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td>{{ customer.age}}</td>
+        <td>{{ customer.gender}}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.dateOfBirth }}</td>
+        <td>{{ customer.phoneNumber }}</td>
+        
+        <td>
+          <button type="button" class="btn-custom-blue" (click)="selectCustomer(customer)">Edit</button>
+          <button type="button" class="btn-custom-blue" (click)="deleteCustomer()">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div *ngIf="selectedCustomer">
+    <h3>Edit Customer</h3>
+    <form>
+      <label>Customer ID:</label>
+      <input [(ngModel)]="selectedCustomer.id" name="id" /><br><br>
+
+      <label>First Name:</label>
+      <input [(ngModel)]="selectedCustomer.firstName" name="firstName" /><br><br>
+
+      <label>Last Name:</label>
+      <input [(ngModel)]="selectedCustomer.lastName" name="lastName" /><br><br>
+
+      <label>Age:</label>
+      <input [(ngModel)]="selectedCustomer.age" name="age" /><br><br>
+
+      <label>Gender:</label>
+      <input [(ngModel)]="selectedCustomer.gender" name="gender" /><br><br>
+
+      <label>Email:</label>
+      <input [(ngModel)]="selectedCustomer.email" name="email" /><br><br>
+
+      <label>Date of Birth:</label>
+      <input [(ngModel)]="selectedCustomer.dateOfBirth" type="date" name="dateOfBirth" /><br><br>
+
+      <label>Phone Number:</label>
+      <input [(ngModel)]="selectedCustomer.phoneNumber" name="phoneNumber" /><br><br>
+
+      <label>Creation Date:</label>
+      <input [(ngModel)]="selectedCustomer.createDate" name="createDate" /><br><br>
+
+      <button type="button" class="btn btn-custom-blue" (click)="updateCustomer()">Update</button>
+      <button type="button" class="btn btn-custom-blue" (click)="deleteCustomer()">Delete</button>
+      <button type="button" class="btn btn-custom-blue" (click)="cancelUpdate()">Cancel</button>
+      
+      
+    </form>
+  </div>
+
+  <div *ngIf="!selectedCustomer">
+    <div class="card-header">
+   
+    <button type="button" class="btn btn-success" (click)="showCreateForm()">Create</button>
+    </div>
+    <div *ngIf="showCreate" >
+      <form>
+
+        <label>Customer ID:</label>
+        <input [(ngModel)]="newCustomer.id" name="id" /><br><br>
+
+        <label>First Name:</label>
+        <input [(ngModel)]="newCustomer.firstName" name="firstName" /><br><br>
+
+        <label>Last Name:</label>
+        <input [(ngModel)]="newCustomer.lastName" name="lastName" /><br><br>
+        <label>Age:</label>
+        <input [(ngModel)]="newCustomer.age" name="age" /><br><br>
+        <label>Gender:</label>
+        <input [(ngModel)]="newCustomer.gender" name="gender" /><br><br>
+
+        <label>Email:</label>
+        <input [(ngModel)]="newCustomer.email" name="email" /><br><br>
+
+        <label>Date of Birth:</label>
+        <input [(ngModel)]="newCustomer.dateOfBirth" type="date" name="dateOfBirth" /><br><br>
+
+        <label>Phone Number:</label>
+        <input [(ngModel)]="newCustomer.phoneNumber" name="phoneNumber" /><br><br>
+
+        <label>Creation Date:</label>
+        <input [(ngModel)]="newCustomer.createDate" name="createDate" placeholder="2023-11-23T16:15:00"/><br><br>
+
+        <button type="button" class="btn btn-custom-blue" (click)="createCustomer()">Create</button>
+        <button type="button" class="btn btn-custom-blue" (click)="cancelCreate()">Cancel</button>
+      </form>
+    </div>
+  </div> 
+</div>
